@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3b71ca;
+            --secondary-color: #2a3f54;
+            --accent-color: #e74c3c;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+        
+        .navbar {
+            background-color: var(--secondary-color);
+        }
+        
+        .navbar-brand {
+            font-weight: 700;
+        }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 120px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('https://placehold.co/1920x1080') no-repeat center center/cover;
+            opacity: 0.1;
+            top: 0;
+            left: 0;
+        }
+        
+        .profile-img {
+            width: 220px;
+            height: 220px;
+            object-fit: cover;
+            border: 5px solid white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 40px;
+            padding-bottom: 15px;
+            font-weight: 700;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background-color: var(--accent-color);
+        }
+        
+        .education-card {
+            margin-bottom: 20px;
+            padding: 25px;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .education-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .badge-custom {
+            background-color: var(--primary-color);
+        }
+        
+        .progress {
+            height: 10px;
+            border-radius: 5px;
+        }
+        
+        .certificate-card {
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .certificate-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .hobby-card {
+            padding: 30px 20px;
+            text-align: center;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .hobby-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .hobby-icon {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-img:hover {
+            transform: scale(1.05);
+        }
+        
+        .contact-info {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .contact-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        footer {
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 30px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 80px 0;
+                text-align: center;
+            }
+            
+            .profile-img {
+                margin: 0 auto 20px;
+            }
+            
+            .section-title::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">My Portfolio</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#about">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#education">Education</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#skills">Skills</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#certificates">Certificates</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#hobbies">Hobbies</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#contact">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <h1 class="display-4 fw-bold mb-3">Hi, I'm <span class="text-warning">Ekta saini</span></h1>
+                    <p class="lead mb-4">Web Developerr</p>
+                    <a href="#contact" class="btn btn-light btn-lg me-2">Contact Me</a>
+                    <a href="#about" class="btn btn-outline-light btn-lg">Learn More</a>
+                </div>
+                <div class="col-lg-6 d-flex justify-content-center">
+                    <img src="C:\Users\Lenovo\OneDrive\Pictures\WhatsApp Image 2025-07-21 at 08.44.31_92ba6c70.jpg" alt="Professional headshot of Ekta saini in formal attire with a professional background" class="img-fluid rounded-circle profile-img">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-5 bg-light" id="about">
+        <div class="container">
+            <h2 class="section-title">About Me</h2>
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <p class="lead">I'm a passionate web developer with expertise in front-end technologies and a keen eye for design.</p>
+                    <p>With in 3 years of experience in web development, I specialize in creating responsive, user-friendly websites and web applications. My journey in technology began during my college days and has evolved into a full-fledged career.</p>
+                    <p>I believe in continuous learning and staying updated with the latest technologies to deliver the best solutions to my clients and employers. When I'm not coding, you can find me reading tech blogs, contributing to open-source projects, or mentoring aspiring developers.</p>
+                </div>
+                <div class="col-lg-6">
+                    <h4 class="mb-3">Personal Details</h4>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><strong>Name:</strong> Ekta saini</li>
+                        <li class="mb-2"><strong>Age:</strong> 18</li>
+                        <li class="mb-2"><strong>Location:</strong> Kanpur, India</li>
+                        <li class="mb-2"><strong>Email:</strong> ekta.@example.com</li>
+                        <li class="mb-2"><strong>Phone:</strong> +91 7607500464</li>
+                        <li class="mb-2"><strong>Languages:</strong> English, Hindi</li>
+                        <li class="mb-2"><strong>Freelance:</strong> Not-Available</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section class="py-5" id="education">
+        <div class="container">
+            <h2 class="section-title">Education</h2>
+            <div class="row">
+                <!-- Class 12 -->
+                <div class="col-md-6 mb-4">
+                    <div class="education-card">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3 class="mb-0">Class 12 (Senior Secondary)</h3>
+                            <span class="badge bg-primary">2023-2024</span>
+                        </div>
+                        <h4 class="text-primary mb-3">MDBL inter college, Umari, Kanpur nagar</h4>
+                        <div class="mb-3">
+                            <span class="badge bg-success me-2">Percentage: 90.5%</span>
+                            <span class="badge bg-info">UP Board</span>
+                        </div>
+                        <p>Completed Class 12 with distinction in Physics, Chemistry, and Mathematics. Electives included Physical Education.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check-circle text-success me-2"></i> Class Topper in Mathematics</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Class 10 -->
+                <div class="col-md-6 mb-4">
+                    <div class="education-card">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3 class="mb-0">Class 10 (Secondary)</h3>
+                            <span class="badge bg-primary">2021-2022</span>
+                        </div>
+                        <h4 class="text-primary mb-3">MDBL inter college, Umari, Kanpur nagar</h4>
+                        <div class="mb-3">
+                            <span class="badge bg-success me-2">87%</span>
+                            <span class="badge bg-info">UP Board</span>
+                        </div>
+                        <p>Completed Class 10 with outstanding performance. Achieved perfect scores in Mathematics and Science subjects.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check-circle text-success me-2"></i> School Rank 1st grade Academic Performance</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Higher Education -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="education-card">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3 class="mb-0">Bachelor of Technology (Computer Science)</h3>
+                            <span class="badge bg-primary">2025 - Present</span>
+                        </div>
+                        <h4 class="text-primary mb-3">PSIT college of higher education</h4>
+                        <div class="mb-3">
+                            <span class="badge bg-success">Current CGPA: 8.3</span>
+                        </div>
+                        <p>Currently pursuing BCA in Computer Science.</p>
+                        <p><strong>Relevant Coursework:</strong> Data Structures, Algorithms, Database Management Systems, Web Development, Operating Systems, Artificial Intelligence</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="py-5 bg-light" id="skills">
+        <div class="container">
+            <h2 class="section-title">Skills</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <h4 class="mb-4">Technical Skills</h4>
+                    
+                    <div class="mb-4">
+                        <h5>HTML5 <span class="float-end">95%</span></h5>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 95%"></div>
+                        </div>
+                    </div>
+                     
+                    <div class="mb-4">
+                        <h5>CSS3 <span class="float-end">90%</span></h5>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- <div class="mb-4">
+                        <h5>JavaScript <span class="float-end">85%</span></h5>
+                        <div class="progress">
+                            <div class="progress-bar bg-info" role="progressbar" style="width: 85%"></div>
+                        </div>
+                    </div> -->
+                    
+                    <div class="mb-4">
+                        <h5>Bootstrap <span class="float-end">60%</span></h5>
+                        <div class="progress">
+                            <div class="progress-bar bg-info" role="progressbar" style="width: 90%"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- <div class="mb-4">
+                        <h5>React.js <span class="float-end">75%</span></h5>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 75%"></div>
+                        </div>
+                    </div>
+                </div> -->
+                
+                <div class="col-md-6">
+                    <h4 class="mb-4">Other Skills</h4>
+                    
+                    <!-- <div class="mb-4">
+                        <h5>UI/UX Design <span class="float-end">80%</span></h5>
+                        <div class="progress">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 80%"></div>
+                        </div>
+                    </div> -->
+                    
+                    <div class="mb-4">
+                        <h5>Python <span class="float-end">90%</span></h5>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 70%"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5>c++ <span class="float-end">85%</span></h5>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 80%"></div>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <h5>C<span class="float-end">80%</span></h5>
+                        <div class="progress">
+                            <div class="progress-bar bg-warning" role="progressbar" style="width: 70%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <h5>Problem Solving <span class="float-end">80%</span></h5>
+                        <div class="progress">
+                            <div class="progress-bar bg-primary" role="progressbar" style="width: 85%"></div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Certificates Section -->
+    <section class="py-5" id="certificates">
+        <div class="container">
+            <h2 class="section-title">Certificates</h2>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card certificate-card h-100">
+                        <img src="C:\Users\Lenovo\OneDrive\Pictures\Screenshots\Screenshot 2025-07-21 090859.png" class="card-img-top" alt="Web Development Certificate from Coursera showing completion badge">
+                        <div class="card-body">
+                            <h5 class="card-title">C++ certificates</h5>
+                            <p class="card-text text-muted"><small>Infoysys springboard</small></p>
+                            <p class="card-text">Completed comprehensive C++ course covering data types, operators, functions, structure and variables. Built projects including a .</p>
+                        </div>
+                        <div class="card-footer bg-white border-top-0">
+                            <small class="text-muted">Issued: April 2025</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card certificate-card h-100">
+                        <img src="C:\Users\Lenovo\OneDrive\Pictures\Screenshots\Screenshot 2025-07-21 092514.png" class="card-img-top" alt="CSS Certificate from Hackerrank">
+                        <div class="card-body">
+                            <h5 class="card-title">CSS basic Certificate</h5>
+                            <p class="card-text text-muted"><small>Hackerrank</small></p>
+                            <p class="card-text">Principles of Css and user experience methodologies. Learned about design thinking and make interactive website.</p>
+                        </div>
+                        <div class="card-footer bg-white border-top-0">
+                            <small class="text-muted">Issued: May 2025</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card certificate-card h-100">
+                        <img src="C:\Users\Lenovo\OneDrive\Pictures\Screenshots\Screenshot 2025-07-22 185023.png" class="card-img-top" alt="Python Certificate from Coursera">
+                        <div class="card-body">
+                            <h5 class="card-title">Python basic Certificate</h5>
+                            <p class="card-text text-muted"><small>Coursera</small></p>
+                            <p class="card-text">Principles of .</p>
+                        </div>
+                        <div class="card-footer bg-white border-top-0">
+                            <small class="text-muted">Issued: June 2025</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card certificate-card h-100">
+                        <img src="C:\Users\Lenovo\OneDrive\Pictures\Screenshots\Screenshot 2025-07-22 185439.png" class="card-img-top" alt="Python Certificate from Hackerrank">
+                        <div class="card-body">
+                            <h5 class="card-title">Python basic Certificate</h5>
+                            <p class="card-text text-muted"><small>Hackerrank</small></p>
+                            <p class="card-text">Principles of .</p>
+                        </div>
+                        <div class="card-footer bg-white border-top-0">
+                            <small class="text-muted">Issued: June 2025</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card certificate-card h-100">
+                        <img src="C:\Users\Lenovo\OneDrive\Pictures\Screenshots\Screenshot 2025-07-22 185650.png" class="card-img-top" alt="C++ Certificate from Infoysys springboard showing completion badge">
+                        <div class="card-body">
+                            <h5 class="card-title">C++ advanced certificate</h5>
+                            <p class="card-text text-muted"><small>Infoysys springboard</small></p>
+                            <p class="card-text">Completed comprehensive C++ course covering and excited to apply these skills in real-world projects and continue my journey in software development.. Built projects including a .</p>
+                        </div>
+                        <div class="card-footer bg-white border-top-0">
+                            <small class="text-muted">Issued: May 2025</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card certificate-card h-100">
+                        <img src="C:\Users\Lenovo\OneDrive\Pictures\Screenshots\Screenshot 2025-07-22 190106.png" class="card-img-top" alt="Microsoft powerpoint Certificate from Infoysys springboard">
+                        <div class="card-body">
+                            <h5 class="card-title">Microsoft powerpoint Certificate</h5>
+                            <p class="card-text text-muted"><small>Infoysys springboard</small></p>
+                            <p class="card-text">Completed comprehensive  .</p>
+                        </div>
+                        <div class="card-footer bg-white border-top-0">
+                            <small class="text-muted">Issued: May 2025</small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card certificate-card h-100">
+                        <img src="C:\Users\Lenovo\OneDrive\Pictures\Screenshots\Screenshot 2025-07-17 235729.png"class="card-img-top" alt="JavaScript Certification with FreeCodeCamp logo">
+                        <div class="card-body">
+                            <h5 class="card-title">International conference</h5>
+                            <p class="card-text text-muted"><small>ICONSDG</small></p>
+                            <p class="card-text">Certified in </p>
+                        </div>
+                        <div class="card-footer bg-white border-top-0">
+                            <small class="text-muted">Issued: March 2025</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Hobbies Section -->
+    <section class="py-5 bg-light" id="hobbies">
+        <div class="container">
+            <h2 class="section-title">Hobbies & Interests</h2>
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="hobby-card">
+                        <div class="hobby-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <h5>Photography</h5>
+                        <p>Capturing moments and telling stories through my lens. Specializing in urban and street photography.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="hobby-card">
+                        <div class="hobby-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h5>Reading</h5>
+                        <p>Passionate about reading fiction and non-fiction books. Enjoy exploring different genres and authors.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="hobby-card">
+                        <div class="hobby-icon">
+                            <i class="fas fa-music"></i>
+                        </div>
+                        <h5>Music</h5>
+                        <p>Enjoy listening the guitar and exploring various music genres. Music is a big part of my life and creative process.</p>
+                    </div>
+                </div>
+                
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="hobby-card">
+                        <div class="hobby-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h5>Coding</h5>
+                        <p>Personal coding projects and contributing to open source. Continuous learning is my passion.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="py-5" id="gallery">
+        <div class="container">
+            <h2 class="section-title">Gallery</h2>
+            <div class="row">
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <img src="C:\Users\Lenovo\OneDrive\Pictures\WhatsApp Image 2025-03-09 at 16.08.57_5acd22f9.jpg" class="gallery-img" alt="Project: E-commerce website dashboard for mobile and desktop">
+                </div>
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <img src="C:\Users\Lenovo\OneDrive\Pictures\WhatsApp Image 2025-03-31 at 09.58.44_813a65b2.jpg" class="gallery-img" alt="Nature photography: Sunset over mountains with reflection in lake">
+                </div>
+                <div class="col-md-4 col-sm-6 mb-4">
+                    <img src="C:\Users\Lenovo\OneDrive\Pictures\WhatsApp Image 2025-03-10 at 20.06.50_a8306332.jpg" class="gallery-img" alt="Team collaboration during a hackathon event">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-5 bg-light" id="contact">
+        <div class="container">
+            <h2 class="section-title">Contact Me</h2>
+            <div class="row">
+                <div class="col-lg-6 mb-5 mb-lg-0">
+                    <h4 class="mb-4">Get in Touch</h4>
+                    <p>Feel free to reach out to me for any questions, project collaborations, or just to say hello!</p>
+                    
+                    <div class="contact-info">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-0">Email</h5>
+                            <p class="mb-0">ekta.24@example.com</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-info">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-0">Phone</h5>
+                            <p class="mb-0">+91 7607500464</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-info">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h5 class="mb-0">Location</h5>
+                            <p class="mb-0">Kanpur, India</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <h4 class="mb-4">Connect With Me</h4>
+                    <div class="mb-4">
+                        <a href="#" class="social-icon d-inline-block">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="#" class="social-icon d-inline-block">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="social-icon d-inline-block">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon d-inline-block">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-icon d-inline-block">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    </div>
+                    
+                    <form>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Your Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="email" class="form-control" placeholder="Your Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <input type="text" class="form-control" placeholder="Subject">
+                        </div>
+                        <div class="mb-3">
+                            <textarea class="form-control" rows="5" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center">
+        <div class="container">
+            <div class="mb-3">
+                <a href="#" class="text-white mx-2"><i class="fab fa-github fa-lg"></i></a>
+                <a href="#" class="text-white mx-2"><i class="fab fa-linkedin-in fa-lg"></i></a>
+                <a href="#" class="text-white mx-2"><i class="fab fa-twitter fa-lg"></i></a>
+                <a href="#" class="text-white mx-2"><i class="fab fa-instagram fa-lg"></i></a>
+            </div>
+            <p class="mb-0">&copy; 2025 Ekta saini. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                const navbarCollapse = document.querySelector('.navbar-collapse');
+                if (navbarCollapse.classList.contains('show')) {
+                    const bsCollapse = new bootstrap.Collapse(navbarCollapse);
+                    bsCollapse.hide();
+                }
+            });
+        });
+        
+        // Change navbar background on scroll
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 50) {
+                navbar.style.backgroundColor = 'rgba(42, 63, 84, 0.95)';
+                navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+                navbar.style.transition = 'all 0.3s ease';
+            } else {
+                navbar.style.backgroundColor = 'var(--secondary-color)';
+                navbar.style.boxShadow = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
