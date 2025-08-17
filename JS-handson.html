@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interactive JS Solutions App</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #6366f1;
+      --secondary: #a5b4fc;
+      --dark: #1e293b;
+      --darker: #0f172a;
+      --light: #f8fafc;
+      --accent: #f59e0b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: var(--darker);
+      color: var(--light);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .app-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 1.5rem;
+      background-color: var(--dark);
+      border-radius: 1rem;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .tagline {
+      color: var(--secondary);
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 768px) {
+      .content {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .problems-section {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    .problems-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 0.8rem;
+    }
+
+    .problem-category {
+      background-color: rgba(99, 102, 241, 0.1);
+      padding: 1rem;
+      border-radius: 0.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .category-title {
+      font-size: 1.2rem;
+      color: var(--accent);
+      margin-bottom: 0.8rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid rgba(165, 180, 252, 0.2);
+    }
+
+    .btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.8rem 1rem;
+      border-radius: 0.5rem;
+      cursor: pointer;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      justify-content: center;
+    }
+
+    .btn:hover {
+      background-color: #4f46e5;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn i {
+      font-size: 1rem;
+    }
+
+    .output-container {
+      background-color: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(165, 180, 252, 0.1);
+      border-radius: 0.5rem;
+      padding: 1.5rem;
+      min-height: 300px;
+      position: relative;
+    }
+
+    #output {
+      white-space: pre-line;
+      line-height: 1.6;
+      font-family: 'Courier New', monospace;
+      overflow-y: auto;
+      max-height: 250px;
+    }
+
+    .output-title {
+      position: absolute;
+      top: -10px;
+      left: 1rem;
+      background-color: var(--dark);
+      padding: 0 0.5rem;
+      color: var(--accent);
+      font-size: 0.9rem;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      color: var(--secondary);
+      font-size: 0.9rem;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .btn {
+      animation: fadeIn 0.4s ease forwards;
+      opacity: 0;
+    }
+
+    .btn:nth-child(1) { animation-delay: 0.1s; }
+    .btn:nth-child(2) { animation-delay: 0.2s; }
+    .btn:nth-child(3) { animation-delay: 0.3s; }
+    .btn:nth-child(4) { animation-delay: 0.4s; }
+    .btn:nth-child(5) { animation-delay: 0.5s; }
+    .btn:nth-child(6) { animation-delay: 0.6s; }
+    .btn:nth-child(7) { animation-delay: 0.7s; }
+    .btn:nth-child(8) { animation-delay: 0.8s; }
+    .btn:nth-child(9) { animation-delay: 0.9s; }
+    .btn:nth-child(10) { animation-delay: 1s; }
+    .btn:nth-child(11) { animation-delay: 1.1s; }
+    .btn:nth-child(12) { animation-delay: 1.2s; }
+    .btn:nth-child(13) { animation-delay: 1.3s; }
+    .btn:nth-child(14) { animation-delay: 1.4s; }
+    .btn:nth-child(15) { animation-delay: 1.5s; }
+    .btn:nth-child(16) { animation-delay: 1.6s; }
+
+    /* Scrollbar styling */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: rgba(30, 41, 59, 0.5);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <header>
+      <h1>JavaScript Problem Solver</h1>
+      <p class="tagline">Interactive solutions for common programming problems</p>
+    </header>
+
+    <div class="content">
+      <div class="problems-section">
+        <div class="problem-category">
+          <h3 class="category-title">Basic Problems</h3>
+          <div class="problems-grid">
+            <button class="btn" onclick="q1()"><i class="fas fa-divide"></i> Divisible by 6 & 9</button>
+            <button class="btn" onclick="q2()"><i class="fas fa-user"></i> Voting Eligibility</button>
+            <button class="btn" onclick="q3()"><i class="fas fa-less-than"></i> Relational Operators</button>
+            <button class="btn" onclick="q4()"><i class="fas fa-graduation-cap"></i> Grading System</button>
+            <button class="btn" onclick="q5()"><i class="fas fa-font"></i> Character to Value</button>
+            <button class="btn" onclick="q6()"><i class="fas fa-plus"></i> Largest of Three</button>
+            <button class="btn" onclick="q7()"><i class="fas fa-sort"></i> Second Smallest</button>
+            <button class="btn" onclick="q8()"><i class="fas fa-shapes"></i> Triangle Type</button>
+          </div>
+        </div>
+
+        <div class="problem-category">
+          <h3 class="category-title">Loops & Patterns</h3>
+          <div class="problems-grid">
+            <button class="btn" onclick="q9()"><i class="fas fa-hashtag"></i> Count Digits</button>
+            <button class="btn" onclick="q10()"><i class="fas fa-five"></i> Count 5's</button>
+            <button class="btn" onclick="q11()"><i class="fas fa-list-ol"></i> Sum of Evens</button>
+            <button class="btn" onclick="q12()"><i class="fas fa-calculator"></i> Sum of Digits</button>
+            <button class="btn" onclick="q13()"><i class="fas fa-asterisk"></i> Print Pattern</button>
+            <button class="btn" onclick="q14()"><i class="fas fa-lock"></i> Prime Check</button>
+            <button class="btn" onclick="q15()"><i class="fas fa-list"></i> Print 1 to N</button>
+            <button class="btn" onclick="q16()"><i class="fas fa-times"></i> Table</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="output-container">
+        <div class="output-title">Output</div>
+        <div id="output">Select any problem to see the output here...</div>
+      </div>
+    </div>
+
+    <footer>
+      <p>Click any button to test the code solution. Results will appear in the output box.</p>
+    </footer>
+  </div>
+
+  <script>
+    let output = document.getElementById("output");
+
+    function q1() {
+      let n = +prompt("Enter a number: ");
+      output.innerText = (n % 6 === 0 && n % 9 === 0)
+        ? `${n} is divisible by both 6 and 9`
+        : `${n} is not divisible by both 6 and 9`;
+    }
+
+    function q2() {
+      let age = +prompt("Enter your age: ");
+      output.innerText = (age >= 18) 
+        ? "✅ Eligible to vote" 
+        : "❌ Not eligible to vote";
+    }
+
+    function q3() {
+      let X = +prompt("Enter first number (X): ");
+      let Y = +prompt("Enter second number (Y): ");
+      output.innerText = (X < Y) 
+        ? "X is smaller than Y" 
+        : (X > Y) 
+          ? "X is greater than Y" 
+          : "X is equal to Y";
+    }
+
+    function q4() {
+      let M = +prompt("Enter marks (out of 50): ");
+      let grade;
+      switch (Math.floor(M / 10)) {
+        case 0: case 1: grade = "E"; break;
+        case 2: grade = "D"; break;
+        case 3: grade = "C"; break;
+        case 4: grade = "B"; break;
+        case 5: grade = "A"; break;
+        default: grade = "Invalid Marks";
+      }
+      output.innerHTML = `Your Grade: <span style="color: var(--accent); font-weight: bold; font-size: 1.2rem;">${grade}</span>`;
+    }
+
+    function q5() {
+      let ch = prompt("Enter a character: ");
+      let result;
+      switch (ch) {
+        case 'P': case 'p': result = "PrepBytes"; break;
+        case 'Z': case 'z': result = "Zenith"; break;
+        case 'E': case 'e': result = "Expert Coder"; break;
+        case 'D': case 'd': result = "Data Structure"; break;
+        default: result = "Invalid Input";
+      }
+      output.innerHTML = `Result: <span style="color: var(--primary);">${result}</span>`;
+    }
+
+    function q6() {
+      let a = +prompt("Enter first number: ");
+      let b = +prompt("Enter second number: ");
+      let c = +prompt("Enter third number: ");
+      if (a === b && b === c) {
+        output.innerText = "All three numbers are equal";
+      } else {
+        let max = Math.max(a, b, c);
+        output.innerHTML = `Largest number is: <span style="color: var(--accent);">${max}</span>`;
+      }
+    }
+
+    function q7() {
+      let arr = [
+        +prompt("Enter first number: "),
+        +prompt("Enter second number: "),
+        +prompt("Enter third number: ")
+      ];
+      arr.sort((x, y) => x - y);
+      output.innerHTML = `
+        Sorted numbers: ${arr.join(", ")}\n
+        Second smallest is: <span style="color: var(--primary);">${arr[1]}</span>
+      `;
+    }
+
+    function q8() {
+      let a1 = +prompt("Enter first angle: ");
+      let b1 = +prompt("Enter second angle: ");
+      let c1 = +prompt("Enter third angle: ");
+      if (a1 + b1 + c1 === 180) {
+        if (a1 < 90 && b1 < 90 && c1 < 90) {
+          output.innerHTML = 'Triangle type: <span style="color: var(--accent)">Acute Triangle</span>';
+        } else if (a1 === 90 || b1 === 90 || c1 === 90) {
+          output.innerHTML = 'Triangle type: <span style="color: var(--accent)">Right Triangle</span>';
+        } else {
+          output.innerHTML = 'Triangle type: <span style="color: var(--accent)">Obtuse Triangle</span>';
+        }
+      } else {
+        output.innerHTML = '<span style="color: #ef4444;">Invalid Triangle</span> (Angles must sum to 180°)';
+      }
+    }
+
+    function q9() {
+      let num = +prompt("Enter a number: "), count = 0, temp = num;
+      while (temp > 0) {
+        count++;
+        temp = Math.floor(temp / 10);
+      }
+      output.innerHTML = `${num} has <span style="color: var(--primary);">${count}</span> digit${count !== 1 ? 's' : ''}`;
+    }
+
+    function q10() {
+      let num = +prompt("Enter a number: "), count5 = 0, t = num;
+      while (t > 0) {
+        if (t % 10 === 5) count5++;
+        t = Math.floor(t / 10);
+      }
+      output.innerHTML = `Number <span style="color: var(--primary);">${num}</span> contains the digit '5' <span style="color: var(--accent);">${count5}</span> time${count5 !== 1 ? 's' : ''}`;
+    }
+
+    function q11() {
+      let N = +prompt("Enter N: "), sum = 0;
+      for (let i = 2; i <= N; i += 2) sum += i;
+      output.innerHTML = `Sum of even numbers from 2 to ${N} is: <span style="color: var(--accent);">${sum}</span>`;
+    }
+
+    function q12() {
+      let num = +prompt("Enter a number: "), sum = 0;
+      while (num > 0) {
+        sum += num % 10;
+        num = Math.floor(num / 10);
+      }
+      output.innerHTML = `Sum of digits: <span style="color: var(--primary);">${sum}</span>`;
+    }
+
+    function q13() {
+      let lines = +prompt("Enter number of lines for pattern: ");
+      let str = "";
+      for (let i = 1; i <= lines; i++) {
+        str += "*".repeat(i) + "\n";
+      }
+      output.innerHTML = `<pre style="color: var(--accent);">${str}</pre>`;
+    }
+
+    function q14() {
+      let n = +prompt("Enter a number: ");
+      let isPrime = true;
+      if (n <= 1) isPrime = false;
+      for (let i = 2; i * i <= n; i++) {
+        if (n % i === 0) {
+          isPrime = false;
+          break;
+        }
+      }
+      output.innerHTML = isPrime 
+        ? `<span style="color: #10b981;">${n} is a Prime Number</span>`
+        : `<span style="color: #ef4444;">${n} is not a Prime Number</span>`;
+    }
+
+    function q15() {
+      let N = +prompt("Enter N: ");
+      let nums = "";
+      for (let i = 1; i <= N; i++) {
+        nums += i + " ";
+      }
+      output.innerHTML = `<span style="color: var(--primary);">Numbers from 1 to ${N}:</span>\n${nums}`;
+    }
+
+    function q16() {
+      let num = +prompt("Enter a number for multiplication table: "), table = "";
+      for (let i = 1; i <= 10; i++) {
+        table += `${num} × ${i} = ${num * i}\n`;
+      }
+      output.innerHTML = `<pre style="color: var(--accent);">Multiplication Table of ${num}:\n${table}</pre>`;
+    }
+  </script>
+</body>
+</html>
